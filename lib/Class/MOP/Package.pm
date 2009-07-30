@@ -48,9 +48,11 @@ sub reinitialize {
 
     my %options = @args;
     my $package_name = delete $options{package};
+    $package_name = $package_name->name
+        if blessed $package_name;
 
-    (defined $package_name && $package_name && !blessed($package_name))
-        || confess "You must pass a package name and it cannot be blessed";
+    (defined $package_name && $package_name)
+        || confess "You must pass a package name";
 
     Class::MOP::remove_metaclass_by_name($package_name);
 
