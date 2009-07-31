@@ -440,10 +440,12 @@ This method creates a new C<Class::MOP::Package> instance which
 represents specified package. If an existing metaclass object exists
 for the package, that will be returned instead.
 
-=item B<< Class::MOP::Package->reinitialize($package_name) >>
+=item B<< Class::MOP::Package->reinitialize($package) >>
 
 This method forcibly removes any existing metaclass for the package
-before calling C<initialize>
+before calling C<initialize>. In contrast to C<initialize>, you may
+also pass an existing C<Class::MOP::Package> instance instead of just
+a package name as C<$package>.
 
 Do not call this unless you know what you are doing.
 
