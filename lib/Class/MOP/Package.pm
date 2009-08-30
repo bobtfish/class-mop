@@ -8,7 +8,7 @@ use Scalar::Util 'blessed', 'reftype';
 use Carp         'confess';
 use Sub::Name    'subname';
 
-our $VERSION   = '0.91';
+our $VERSION   = '0.92';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -49,10 +49,9 @@ sub reinitialize {
     my %options = @args;
     my $package_name = delete $options{package};
 
-    defined $package_name && $package_name && ( !blessed $package_name
-        || $package_name->isa('Class::MOP::Package') )
-        or confess
-        "You must pass a package name or an existing Class::MOP::Package instance";
+    (defined $package_name && $package_name
+      && (!blessed $package_name || $package_name->isa('Class::MOP::Package')))
+        || confess "You must pass a package name or an existing Class::MOP::Package instance";
 
     $package_name = $package_name->name
         if blessed $package_name;

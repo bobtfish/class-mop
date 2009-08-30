@@ -6,7 +6,7 @@ use warnings;
 
 use Scalar::Util 'weaken', 'blessed';
 
-our $VERSION   = '0.91';
+our $VERSION   = '0.92';
 $VERSION = eval $VERSION;
 our $AUTHORITY = 'cpan:STEVAN';
 
@@ -75,15 +75,6 @@ sub associated_metaclass { $_[0]{'associated_metaclass'} }
 sub create_instance {
     my $self = shift;
     bless {}, $self->_class_name;
-}
-
-# for compatibility
-sub bless_instance_structure {
-    Carp::cluck('The bless_instance_structure method is deprecated.'
-        . " It will be removed in a future release.\n");
-
-    my ($self, $instance_structure) = @_;
-    bless $instance_structure, $self->_class_name;
 }
 
 sub clone_instance {
@@ -181,7 +172,7 @@ sub inline_create_instance {
 
 sub inline_slot_access {
     my ($self, $instance, $slot_name) = @_;
-    sprintf q[%s->{'%s'}], $instance, quotemeta($slot_name);
+    sprintf q[%s->{"%s"}], $instance, quotemeta($slot_name);
 }
 
 sub inline_get_slot_value {
